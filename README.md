@@ -14,6 +14,44 @@ This repository documents the development, deployment, and validation of three h
     └── README.md                     # Project overview, detailed practice breakdown, and reproducibility notes
 
 ---
+---
+
+## Architecture Diagrams
+
+### Practice 02 — Resilient Containers & Serverless Architecture (AWS)
+
+    [Client / Tester]
+           |
+           +---> [API Gateway] ---> [AWS Lambda (handler.js)]
+           |
+           +---> [Application Load Balancer (resilient-alb)]
+                        |
+                        v
+                 [ECS Fargate Cluster]
+                 +---------------------------------------+
+                 |  resilient-service (Port 80/8080)     |
+                 |  [Nginx Proxy] -> [Resilient Client]  |
+                 |                   (Circuit Breaker)   |
+                 +---------------------------------------+
+
+### Practice 03 — Hub-and-Spoke VPC Peering & Lift-and-Shift (us-east-1)
+
+    +-----------------------------------+         +-----------------------------------+
+    |        HUB VPC (10.10.0.0/16)     |         |       SPOKE VPC (10.20.0.0/16)    |
+    |                                   |         |                                   |
+    |  +-----------------------------+  |   VPC   |  +-----------------------------+  |
+    |  | Public Subnet (10.10.1.0/24)|  | Peering |  | Isolated Subnet (10.20.1/24)|  |
+    |  |                             |  | active  |  |                             |  |
+    |  |  [Bastion Host]             +==+=========+=>|  [Lift-and-Shift EC2]       |  |
+    |  |  IP: 10.10.1.242            |  |  TCP    |  |  IP: 10.20.1.150:3000       |  |
+    |  +--------------+--------------+  |  3000   |  |  (lift-and-shift-app.py)    |  |
+    |                 |                 |  ICMP   |  +-----------------------------+  |
+    |           [Internet GW]           |         |                                   |
+    +-----------------+-----------------+         +-----------------------------------+
+                      |
+                 (Internet)
+                 
+---
 
 ## Detailed Breakdown of Practices
 
