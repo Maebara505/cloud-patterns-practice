@@ -1,0 +1,13 @@
+{
+  "name": "01-resilience-patterns",
+  "version": "1.0.0",
+  "description": "Implementacion de Timeout, Retry y Circuit Breaker",
+  "scripts": {
+    "start:unstable": "node unstable-service.js",
+    "start:client": "node resilient-client.js",
+    "test:evidence": "node test-runner.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
